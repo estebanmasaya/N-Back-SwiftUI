@@ -9,22 +9,48 @@ import SwiftUI
 
 struct ActionIconView: View {
     @EnvironmentObject var theViewModel : N_Back_SwiftUIVM
+
     var body: some View {
-        VStack(alignment: .center) {
-            Text("START GAME").font(.largeTitle)
-            HStack(spacing: 30){
-                Button {
-                    theViewModel.soundClick()
-                } label: {
-                    SoundIconView()
-                }
-                Button {
-                    theViewModel.imageClick()
-                } label: {
-                    ImageIconView()
-                }
-            }
+        ZStack{
             
+            if theViewModel.orientation.isPortrait{
+                
+                HStack(){
+                    Button {
+                        theViewModel.soundClick()
+                    } label: {
+                        ButtonView(title: "SOUND", imageString: "music.note", state: theViewModel.soundButtonState)
+                    }.disabled(!theViewModel.soundButtonEnabled || !theViewModel.soundIsActivated)
+                    Button {
+                        theViewModel.imageClick()
+                    } label: {
+                        ButtonView(title: "POSITION", imageString: "square.fill", state: theViewModel.positionButtonState)
+                    }.disabled(!theViewModel.positionButtonEnabled || !theViewModel.positionIsActivated)
+                    
+                }
+                
+            }
+            else{
+                VStack{
+                    Button {
+                        theViewModel.soundClick()
+                    } label: {
+                        ButtonView(title: "SOUND", imageString: "music.note", state: theViewModel.soundButtonState)
+                    }
+                    .disabled(!theViewModel.soundButtonEnabled || !theViewModel.soundIsActivated)
+                    Button {
+                        theViewModel.imageClick()
+                    } label: {
+                        ButtonView(title: "POSITION", imageString: "square.fill", state: theViewModel.positionButtonState)
+                    }.disabled(!theViewModel.positionButtonEnabled || !theViewModel.positionIsActivated)
+                }
+                
+            }
+           
+            
+        }.font(.caption2).onRotate{newOrientation in
+            theViewModel.orientation = newOrientation
+            print("New orientation: \(newOrientation.isLandscape)")
         }
     }
 }

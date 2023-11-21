@@ -34,25 +34,7 @@ struct ContentView: View {
     @State private var orientation = UIDeviceOrientation.portrait
     
     var body: some View {
-        VStack() {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            
-            Text("High-Score \(theViewModel.highScore)")
-            Spacer()
-            Button {
-                theViewModel.newHighScoreValue()
-            } label: {
-                Text("Generate eventValue")
-                    .font(.title)
-            }
-            .padding()
-            Spacer()
-            ActionIconView()
-            
-        }
-        .padding()
+        MenuView()
     }
 }
 
@@ -60,7 +42,7 @@ struct ContentView: View {
 
 
 
-struct ContentView_Previews:     {
+struct ContentView_Previews: PreviewProvider{
     static var previews: some View {
         Group{
             ForEach(["iPhone SE (3rd generation)", "iPhone 14 Pro Max"], id: \.self) { deviceName in
